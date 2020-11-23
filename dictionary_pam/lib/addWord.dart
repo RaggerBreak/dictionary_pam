@@ -16,20 +16,20 @@ class _AddWordPageState extends State<AddWord> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Dodaj nowe słowo"),
+          title: Text("Dodaj tłumaczenie"),
         ),
-        body: MyCustomForm(),
+        body: AddWordForm(),
     );
   }
 }
 
-class MyCustomForm extends StatefulWidget {
+class AddWordForm extends StatefulWidget {
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  AddWordFormState createState() {
+    return AddWordFormState();
   }
 }
-class MyCustomFormState extends State<MyCustomForm> {
+class AddWordFormState extends State<AddWordForm> {
 
   TextEditingController wordEngController = new TextEditingController();
   TextEditingController wordPlController = new TextEditingController();
