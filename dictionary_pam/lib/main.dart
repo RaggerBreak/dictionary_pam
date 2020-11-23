@@ -1,4 +1,8 @@
+import 'package:dictionary_pam/addWord.dart';
+import 'package:dictionary_pam/dbhelper.dart';
+import 'package:dictionary_pam/word.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,21 +13,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Dictionary',
       theme: ThemeData(
 
         primarySwatch: Colors.blue,
 
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'ENG - POL'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
 
   final String title;
 
@@ -32,44 +35,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  List<Word> words = [];
+  int wordsLength = 0;
 
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
+  DbHelper dbHelper = DbHelper();
 
   @override
   Widget build(BuildContext context) {
 
+    updateList();
+
     return Scaffold(
-      appBar: AppBar(
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: [
+            IconButton(
+              icon: new Icon(Icons.add),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddWord()),
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: buildListView());
   }
+
+  ListView buildListView() {
+    return ListView.builder(
+        itemCount: words.length != null ? words.length : 0,
+        itemBuilder: (context, i) => ListTile(
+          title: Text(words[i].wordEng),
+          subtitle: Text(words[i].wordPl),
+          onTap: (null),
+        ));
+  }
+
+  void updateList() {
+    dbHelper.open().then((_) => dbHelper.getWords().then((value) => {
+      setState(() {
+        words = value;
+      })
+    }));
+  }
+
 }
+
