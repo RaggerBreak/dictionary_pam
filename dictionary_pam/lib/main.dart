@@ -67,7 +67,23 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, i) => ListTile(
           title: Text(words[i].wordEng),
           subtitle: Text(words[i].wordPl),
-          onTap: (null),
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Center(child: Text(words[i].wordEng)),
+                  content:
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(words[i].wordPl),
+                      SizedBox(height: 20),
+                      Text(words[i].description != null ? words[i].description : "")
+                    ],
+                  ),
+                )
+            );
+          }
         ));
   }
 

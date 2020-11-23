@@ -25,6 +25,6 @@ class Word {
 
   static Word fromMap(Map<String, dynamic> map) {
     return new Word(
-        id: map['id'], wordEng: map['wordEng'], wordPl: map['wordPl'], description: map['definition']);
+        id: map['id'], wordEng: map['wordEng'], wordPl: map['wordPl'], description: map['description']);
   }
 }
