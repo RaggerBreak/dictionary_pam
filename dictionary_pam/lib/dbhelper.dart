@@ -48,7 +48,7 @@ class DbHelper {
     return List.generate(result.length, (i) => Word.fromMap(result[i]));
   }
 
-  Future<int> deleteEntry(Word word) async {
+  Future<int> deleteWord(Word word) async {
     var result = await db.delete("words", where: 'id = ?', whereArgs: [word.id]);
     return result;
   }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dictionary_pam/addWord.dart';
 import 'package:dictionary_pam/dbhelper.dart';
 import 'package:dictionary_pam/word.dart';
@@ -81,6 +83,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(words[i].description != null ? words[i].description : "")
                     ],
                   ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        var helper = DbHelper();
+                        helper.deleteWord(words[i]);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 )
             );
           }
